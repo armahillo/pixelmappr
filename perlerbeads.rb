@@ -2,8 +2,7 @@
 
 require 'rubygems'
 require 'bundler/setup'
-require './lib/perler.rb'
-require './lib/pixel.rb'
+require 'perlerbeads'
 
 p = Perler.new("/home/aaron/Desktop/link.gif")
 

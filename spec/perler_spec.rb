@@ -1,4 +1,6 @@
-require 'perler'
+require 'perlerbeads'
+
+module Perlerbeads
 
 describe "Perler" do
 
@@ -37,12 +39,6 @@ describe "Perler" do
       end
     end
   end
-  describe "Reports > " do
-    it "beads_needed" do
-      expect(test_img).to respond_to(:beads_needed)
-    end
-    it "to_grid" do
-      expect(test_img).to respond_to(:to_grid)
-    end
-  end
+end
+
 end

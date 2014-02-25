@@ -1,4 +1,6 @@
 
+module Perlerbeads
+
 class Color
 
   attr_reader :rgba, :xyz, :lab, :name
@@ -167,4 +169,6 @@ private
      a:(500 * (x - y)),
      b:(200 * (y - z))}
   end
+end
+
 end

@@ -1,6 +1,6 @@
 require 'RMagick'
-require './lib/color.rb'
 
+module Perlerbeads
 
 class Perler < Magick::Image::View
   attr_reader :image, :colors, :beads, :grid
@@ -155,3 +155,4 @@ class Perler < Magick::Image::View
   end
 end
 
+end
