@@ -32,21 +32,12 @@ describe "Color" do
   
   context "representation" do
     it "can show a hexadecimal string" do
-    p Color.new(*pink16_rgb).inspect
-      expect(pink.to_rgb).to match_array(pink16_rgb)
+      expect(pink.rgba).to match_array(pink16_rgb)
     end
     
     it "can show an integer value" do
-      
+      expect(pink.to_int).to match_array(pink_rgb)
     end
-  end
-  
-  context "with 16 bit color values" do
-    
-  end
-  
-  context "with 32 bit color values" do
-  
   end
   
   context "when matching a color" do
