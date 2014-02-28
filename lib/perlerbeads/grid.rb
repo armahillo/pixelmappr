@@ -52,6 +52,31 @@ class Grid
   end
   
   def to_html
+    styles = "<style type=\"text/css\">table tr td { width: 15px; height: 15px; } table.grid tr td { border: 1px dotted #999; text-align: center; } table.legend tr td.box { border: 1px solid black; } table.legend tr td.color_0 { border: 1px dotted black !important; }"
+    legend = self.legend
+    legend_html = ""
+    pattern = "<tr>"
+    legend.each do |key,hexcode|
+      styles += ".color_#{key} { background-color: #{hexcode}; }"
+      legend_html += "<tr><td class=\"box color_#{key}\">&nbsp;</td><td>#{(key == 0 ? "&nbsp;" : key)}</td></tr>"
+    end
+    styles += "</style>"
+    
+    
+    self.to_a.each do |r|
+      r.each do |c|
+        pattern += "<td class=\"color_#{c.to_s}\">#{(c.to_s == 0 ? "&nbsp;" : legend.key(c.to_s))}</td>"
+      end
+      pattern += "</tr><tr>"
+    end
+    return "<!doctype html><head>#{styles}</head><body>
+      <table class=\"grid\">#{pattern}</table>
+      <table class=\"legend\">#{legend_html}</table>
+      </body></html>"
+  end
+  
+  def export
+    File.open("export/dump-#{Time.now.to_f.to_s.gsub(/\./,'')}.html",'w') { |f| f.write(self.to_html) }
   end
 =begin  
   def self.render_grid_with_all_colors
@@ -91,21 +116,8 @@ class Grid
       puts i.to_s(16) + ": " + @colors[i].to_s
     end
   end
-  def to_html(cols = @image.columns)
-    styles = "<style type=\"text/css\">table tr td { width: 15px; height: 15px; }"
-    legend = ""
-    @colors.each_index do |i|
-      styles += ".color_#{i.to_s(16)} { background-color: #{@colors[i].to_s}; }"
-      legend += "<tr><td class=\"color_#{i.to_s(16)}\">&nbsp;</td><td>#{@colors[i].to_s}</td></tr>"
-    end
-    styles += "</style>"
-    cells = "<tr>"
-    @grid.each_index do |i|
-      cells += "</tr><tr>" if (i % cols == 0) and (i > 0)
-      cells += (@grid[i] == "0") ? "<td>&nbsp;</td>" : "<td class=\"color_#{@grid[i]}\">#{@grid[i]}</td>"
-      print " "
-    end
-    File.open("export/dump-#{Time.now.to_f.to_s.gsub(/\./,'')}.html",'w') { |f| f.write("<!doctype html><head>#{styles}</head><body><table>#{cells}</table> <table>#{legend}</table></body></html>") }
+  
+    
   end
 =end  
 end

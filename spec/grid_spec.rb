@@ -99,21 +99,26 @@ t u v w x y z
         expect(g.to_s).to eq(expected_output)
       end
     end
-  end
-  
-  describe "Rendering > " do
     
-    
-    describe "HTML Output" do
+    describe "to_html" do
       it "exists" do
         expect(grid).to respond_to(:to_html)
       end
       it "prints an HTML representation of the image" do
-      
+        puts @checkerboard.to_html
       end
     end
     
+    describe "export" do
+      it "exists" do
+        expect(grid).to respond_to(:export)
+      end
+      it "creates a file" do
+        pending("How to check for files created?")
+      end
+    end
   end
+  
 end
 
 end
