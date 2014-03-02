@@ -26,7 +26,8 @@ class Grid
     colors = @data.flatten.uniq
     manifest = {}
     colors.each do |c|
-      manifest[c.to_s] = @data.count(c)
+      name = c.nil? ? "empty" : c.to_s
+      manifest[name] = @data.count(c)
     end
     return manifest
   end
@@ -44,28 +45,29 @@ class Grid
     output = ""
     self.to_a.each do |r|
       r.each do |c|
-        output += "#{l.key(c.to_s).to_i.to_s(36)} "
+        output += "#{Grid.encode_index(l.key(c.to_s))} "
       end
       output += "\n"
     end
     output
   end
   
-  def to_html
+  def to_html(with_color = true)
     styles = "<style type=\"text/css\">table tr td { width: 15px; height: 15px; } table.grid tr td { border: 1px dotted #999; text-align: center; } table.legend tr td.box { border: 1px solid black; } table.legend tr td.color_0 { border: 1px dotted black !important; }"
     legend = self.legend
     legend_html = ""
     pattern = "<tr>"
     legend.each do |key,hexcode|
       styles += ".color_#{key} { background-color: #{hexcode}; }"
-      legend_html += "<tr><td class=\"box color_#{key}\">&nbsp;</td><td>#{(key == 0 ? "&nbsp;" : key)}</td></tr>"
+      legend_html += "<tr><td class=\"box color_#{key}\">&nbsp;</td><td>#{(key == 0 ? "&nbsp;" : Grid.encode_index(key))}</td></tr>"
     end
     styles += "</style>"
     
     
     self.to_a.each do |r|
       r.each do |c|
-        pattern += "<td class=\"color_#{c.to_s}\">#{(c.to_s == 0 ? "&nbsp;" : legend.key(c.to_s))}</td>"
+        style = with_color ? "color_#{legend.key(c.to_s)}" : ""
+        pattern += "<td class=\"#{style}\">#{(legend.key(c.to_s) == 0 ? "&nbsp;" : Grid.encode_index(legend.key(c.to_s)))}</td>"
       end
       pattern += "</tr><tr>"
     end
@@ -75,8 +77,12 @@ class Grid
       </body></html>"
   end
   
-  def export
-    File.open("export/dump-#{Time.now.to_f.to_s.gsub(/\./,'')}.html",'w') { |f| f.write(self.to_html) }
+  def export(with_color = true)
+    File.open("export/dump-#{Time.now.to_f.to_s.gsub(/\./,'')}.html",'w') { |f| f.write(self.to_html(with_color)) }
+  end
+
+  def Grid.encode_index(v)
+    v.to_i.to_s(36)
   end
 =begin  
   def self.render_grid_with_all_colors

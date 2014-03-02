@@ -4,6 +4,10 @@ module Perlerbeads
 
 describe "Grid" do
 
+  let(:html_output) { file = File.open("spec/data/checkerboard.html", "r")
+                      contents = file.read.chomp
+                      file.close
+                      return contents }
   let(:grid) { Grid.new(8,8) }
   let(:black) { Color.new("00","00","00") }
   let(:white) { Color.new("ff","ff","ff") }
@@ -105,7 +109,7 @@ t u v w x y z
         expect(grid).to respond_to(:to_html)
       end
       it "prints an HTML representation of the image" do
-        puts @checkerboard.to_html
+        expect(@checkerboard.to_html).to eq(html_output)
       end
     end
     

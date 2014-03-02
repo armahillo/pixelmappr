@@ -2,11 +2,17 @@
 
 require 'rubygems'
 require 'bundler/setup'
-require 'perlerbeads'
+require 'RMagick'
+require './lib/perlerbeads/color.rb'
+require './lib/magick/pixel.rb'
+require './lib/perlerbeads/perler.rb'
+require './lib/perlerbeads/grid.rb'
 
-p = Perler.new("/home/aaron/Desktop/link.gif")
+include Perlerbeads
+
+p = Perler.new("/home/aaron/Desktop/witchhouse.jpg")
 
 #p.beads_needed
-#puts p.to_s
-p.to_html
+puts p.total_beads
+#p.grid.export
 #puts Perler.render_grid_with_all_colors

@@ -1,9 +1,10 @@
-require 'RMagick'
-
 module Perlerbeads
 
 class Perler < Magick::Image::View
   attr_reader :image, :colors, :beads, :grid
+
+  #@@TRANSPARENT = Color.new("FF","FF","FF","00", "transparent")
+  @@TRANSPARENT = nil
 
   @@PERLER_COLORS = {
     :black => Color.new("01","01","01","FF", "black"),
@@ -51,9 +52,9 @@ class Perler < Magick::Image::View
 
   def initialize (img_path)
     @image = Magick::Image.read(img_path).first
-    @colors = ["empty"]
-    @beads = {"empty" => 0}
-    @grid = []
+    #@colors = ["empty"]
+    #@beads = {"empty" => 0}
+    @grid = Grid.new(columns, rows)
     analyze
   end
   
@@ -133,25 +134,15 @@ class Perler < Magick::Image::View
 ###
   def analyze
     @image.each_pixel do |pixel,c,r|
-      if (pixel.transparent?)
-        color_name = "empty"
-      else
-        o = Color.new(pixel.red.to_s(16), pixel.green.to_s(16), pixel.blue.to_s(16))
-        color = o.closest_match(*(@@PERLER_COLORS.values))
-        color_name = color.to_s
-      end
-      @colors << color_name unless @colors.include?(color_name)
-      @grid << @colors.index(color_name).to_s(16)
-      if (@beads.keys.include?(color_name))
-        @beads[color_name] += 1
-      else 
-        @beads[color_name] = 1
-      end
+      o = Color.new(pixel.red.to_s(16), pixel.green.to_s(16), pixel.blue.to_s(16))
+      color = (pixel.transparent?) ? @@TRANSPARENT : o.closest_match(*@@PERLER_COLORS.values)
+      @grid << color
     end
+    @beads = @grid.manifest
   end
 
   def total_beads
-    @beads.values.inject(:+) - @beads["empty"]
+    @beads.values.inject(:+) - (@beads["empty"] || 0)
   end
 end
 
