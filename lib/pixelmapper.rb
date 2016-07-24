@@ -1,3 +1,5 @@
+require 'rubygems'
+require 'bundler/setup'
 require 'RMagick'
 require 'pixelmapper/color.rb'
 require 'magick/pixel.rb'

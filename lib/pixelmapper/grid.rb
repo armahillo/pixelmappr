@@ -75,13 +75,11 @@ table.legend tr td.color_0 { border: 1px dotted black !important; }
     styles += ".manifest { display: none; }" unless with_manifest
 
     legend_html = "<tr><td class=\"box color_0\">&nbsp;</td><td>&nbsp; empty</td></tr>\n"
-    manifest_html = ""
 
     legend.each_with_index do |v,i|
       next if i == 0
       styles += ".color_#{i} { background-color: #{v[:hexcode]}; }\n"
-      legend_html += "<tr><td class=\"box color_#{i}\">&nbsp;</td><td>#{Grid.encode_index(i)} #{v[:name]}</td></tr>\n"
-      manifest_html += "<tr><td class=\"box color_#{i}\">&nbsp;</td><td>#{@manifest[v[:name]]} x #{v[:name]}</td></tr>\n"
+      legend_html += "<tr><td class=\"box color_#{i}\">&nbsp;</td><td>#{Grid.encode_index(i)} #{v[:name]} (#{@manifest[v[:name]]})</td></tr>\n"
     end
     styles += "</style>\n"
     
@@ -105,15 +103,12 @@ table.legend tr td.color_0 { border: 1px dotted black !important; }
 <table class=\"legend\">
 #{legend_html}
 </table>
-<table class=\"manifest\">
-#{manifest_html}
-</table>
 </body></html>"
   end
   
-  def export(file = nil)
+  def export(file = nil, with_color = true, with_legend = true, with_manifest = false)
     file_with_path = sanitize_destination_file(file)
-    File.open("#{file_with_path}",'w') { |f| f.write(self.to_html(true)) }
+    File.open("#{file_with_path}",'w') { |f| f.write(self.to_html(with_color, with_legend, with_manifest)) }
   end
 
   def Grid.encode_index(v)
@@ -122,7 +117,7 @@ table.legend tr td.color_0 { border: 1px dotted black !important; }
 
 private
   def sanitize_destination_file(file_with_path = nil)
-    file_with_path ||= self.default_filename
+    file_with_path ||= Grid.default_filename
     dir = File.dirname(file_with_path)
     dir = Dir.exists?(dir) ? dir : "export"
     filename = File.basename(file_with_path)

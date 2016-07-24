@@ -15,14 +15,7 @@ p = Perler.new(image)
 
 output = (ARGV.count > 0) ? ARGV.shift : nil
 
-if output
-    File.open(output, 'w+') do |file|
-		file.puts p.grid.to_html
-	end
-else
-	puts p.grid.to_html
-	
-end
+p.grid.export(output, true, true, true)
   
 #puts p.beads_needed
 #puts p.total_beads
