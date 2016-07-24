@@ -1,5 +1,5 @@
 
-module Perlerbeads
+module Pixelmapper
 
 class Color
 

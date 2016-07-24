@@ -1,6 +1,6 @@
-require 'perlerbeads'
+require 'pixelmapper'
 
-module Perlerbeads
+module Pixelmapper
 
 describe "Perler" do
 

@@ -1,4 +1,4 @@
-module Perlerbeads
+module Pixelmapper
 
 class Perler < Magick::Image::View
   attr_reader :image, :colors, :beads, :grid
@@ -101,7 +101,7 @@ class Perler < Magick::Image::View
     legend = ""
     @colors.each_index do |i|
       styles += ".color_#{i.to_s(16)} { background-color: #{@colors[i].to_s}; }"
-      legend += "<tr><td class=\"color_#{i.to_s(16)}\">&nbsp;</td><td>#{@colors[i].to_s}</td></tr>"
+      legend += "<tr><td class=\"color_#{i.to_s(16)}\">&nbsp;</td><td>#{@colors[i].name}  #{@colors[i].to_s}</td></tr>"
     end
     styles += "</style>"
     cells = "<tr>"
@@ -113,14 +113,18 @@ class Perler < Magick::Image::View
     File.open("export/dump-#{Time.now.to_f.to_s.gsub(/\./,'')}.html",'w') { |f| f.write("<!doctype html><head>#{styles}</head><body><table>#{cells}</table> <table>#{legend}</table></body></html>") }
   end
   
-  def self.render_grid_with_all_colors
-    styles = "<style type=\"text/css\">table tr td { width: 15px; height: 15px; }"
+  def self.render_grid_with_all_colors(show_names = false)
+    styles = "<style type=\"text/css\">table tr td { width: 35px; height: 35px; }"
     legend = "<tr>"
     row = 1
     @@PERLER_COLORS.each do |name,color|
+      column_limit = show_names ? 4 : 6
       styles += ".#{name.to_s} { background-color: #{color.to_s}; }"
       legend += "<td class=\"#{name.to_s}\"><abbr title=\"#{color.to_s}\">&nbsp;</abbr></td>"
-      if (row % 6 == 0)
+      if (show_names)
+        legend += "<td>#{name}</td>"
+      end
+      if (row % column_limit == 0)
         legend += "</tr><tr>"
       end
       row += 1

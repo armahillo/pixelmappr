@@ -1,5 +1,0 @@
-require 'RMagick'
-require 'perlerbeads/color.rb'
-require 'magick/pixel.rb'
-require 'perlerbeads/perler.rb'
-require 'perlerbeads/grid.rb'

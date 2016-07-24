@@ -1,16 +1,13 @@
-require 'perlerbeads'
+require 'pixelmapper'
 
-module Perlerbeads
+module Pixelmapper
 
 describe "Grid" do
 
-  let(:html_output) { file = File.open("spec/data/checkerboard.html", "r")
-                      contents = file.read.chomp
-                      file.close
-                      return contents }
+  let(:html_output) { File.read("spec/data/checkerboard.html").chomp }
   let(:grid) { Grid.new(8,8) }
-  let(:black) { Color.new("00","00","00") }
-  let(:white) { Color.new("ff","ff","ff") }
+  let(:black) { Color.new("00","00","00","ff","black") }
+  let(:white) { Color.new("ff","ff","ff","ff","white") }
 
   describe "Constructor" do
     it "instantiates a grid with a width and height" do
@@ -38,7 +35,7 @@ describe "Grid" do
       end
       it "adds the color to the data object" do
         expect {
-          grid << Color.new("ff","ff","ff")
+          grid << white
         }.to change(grid.data, :count).by(1)
       end
     end
@@ -50,7 +47,10 @@ describe "Grid" do
       it "returns a hash" do
         manifest = @checkerboard.manifest
         expect(manifest.class).to eq(Hash)
-        expect(manifest.keys).to match_array([black.to_s,white.to_s])
+      end
+      it "contains the count for each color used" do
+        manifest = @checkerboard.manifest
+        expect(manifest.keys).to match_array([black.name,white.name])
         expect(manifest.values).to match_array([32,32])
       end
     end
@@ -58,10 +58,21 @@ describe "Grid" do
       it "exists" do
         expect(grid).to respond_to(:legend)
       end
-      it "returns a hash" do
-        expect(@checkerboard.legend.class).to eq(Hash)
+      it "returns an array of hashes" do
+        expect(@checkerboard.legend.class).to eq(Array)
+        expect(@checkerboard.legend[0].class).to eq(Hash)
       end
-      
+      it "enumerates the colors to indices" do
+        legend = @checkerboard.legend
+        expect(legend[0][:name]).to eq("empty")
+        expect(legend[1][:hexcode]).to eq("#ffffff")
+        expect(legend[2][:name]).to eq("black")
+      end
+      it "updates the legend when a new color is added" do
+        expect {
+          @checkerboard << Color.new("aa","aa","aa","ff","Gray")
+        }.to change{@checkerboard.legend}
+      end
     end
     describe "to_a" do
       it "exists" do
@@ -114,11 +125,28 @@ t u v w x y z
     end
     
     describe "export" do
+      around(:each) do
+        ::FileUtils.rm_rf("./spec/export")
+        ::FileUtils.mkdir("./spec/export")
+      end
       it "exists" do
         expect(grid).to respond_to(:export)
       end
       it "creates a file" do
-        pending("How to check for files created?")
+        expect {
+          grid.export('spec/export/output.html')
+        }.to change{File.exists?('spec/export/output.html')}.from(false).to(true)
+      end
+      it "allows for a default filename" do
+        allow(Grid).to_receive(:default_filename).and_return("spec/export/output.html")
+        expect {
+          grid.export
+        }.to change{File.exists?('spec/export/output.html')}.from(false).to(true)
+      end
+      it "appends html if that is not provided" do
+        expect {
+          grid.export('spec/export/output')
+        }.to change{File.exists?('spec/export/output.html')}.from(false).to(true)
       end
     end
   end
