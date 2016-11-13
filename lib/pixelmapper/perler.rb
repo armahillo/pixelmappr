@@ -6,6 +6,7 @@ class Perler < Magick::Image::View
   #@@TRANSPARENT = Color.new("FF","FF","FF","00", "transparent")
   @@TRANSPARENT = nil
 
+  # TODO - Refactor this to load from a YAML config file
   @@PERLER_COLORS = {
     :black => Color.new("01","01","01","FF", "black"),
     :white => Color.new("FF","FF","FF","FF", "white"),

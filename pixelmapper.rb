@@ -7,6 +7,7 @@ require './lib/pixelmapper/color.rb'
 require './lib/magick/pixel.rb'
 require './lib/pixelmapper/perler.rb'
 require './lib/pixelmapper/grid.rb'
+require './lib/pixelmapper/palette.rb'
 
 include Pixelmapper
 

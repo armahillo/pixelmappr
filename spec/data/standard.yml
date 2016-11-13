@@ -1,0 +1,28 @@
+---
+name: Standard
+colors:
+  black:
+  - '01'
+  - '01'
+  - '01'
+  white:
+  - 'F1'
+  - 'F1'
+  - 'F1'
+  red:
+  - 'FF'
+  - '00'
+  - '00'
+  blue:
+  - '00'
+  - '00'
+  - 'FF'
+  green:
+  - '00'
+  - 'FF'
+  - '00'
+  with_transparent:
+  - '00'
+  - '00'
+  - '00'
+  - '88'

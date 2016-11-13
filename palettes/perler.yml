@@ -1,0 +1,203 @@
+---
+name: Perler Beads
+colors:
+  white:
+  - 'F1'
+  - 'F1'
+  - 'F1'
+  cream:
+  - 'E0'
+  - 'DE'
+  - 'A9'
+  yellow:
+  - 'EC'
+  - 'D8'
+  - '00'
+  orange:
+  - 'ED'
+  - '61'
+  - '20'
+  red:
+  - 'BF'
+  - '2E'
+  - '40'
+  bubblegum:
+  - 'DD'
+  - '66'
+  - '9B'
+  purple:
+  - '60'
+  - '40'
+  - '89'
+  dark_blue:
+  - '2B'
+  - '3F'
+  - '87'
+  light_blue:
+  - '33'
+  - '70'
+  - 'C0'
+  dark_green: 
+  - '1C'
+  - '75'
+  - '3E'
+  light_green: 
+  - '56'
+  - 'BA'
+  - '9F'
+  brown: 
+  - '51'
+  - '39'
+  - '31'
+  grey: 
+  - '8A'
+  - '8D'
+  - '91'
+  grey: 
+  - '8A'
+  - '8D'
+  - '91'
+  black: 
+  - '2E'
+  - '2F'
+  - '32'
+  rust: 
+  - '8C'
+  - '37'
+  - '2C'
+  light_brown: 
+  - '81'
+  - '5D'
+  - '34'
+  peach: 
+  - 'EE'
+  - 'BA'
+  - 'B2'
+  tan: 
+  - 'BC'
+  - '93'
+  - '71'
+  magenta: 
+  - 'F2'
+  - '2A'
+  - '7B'
+  pastel_blue: 
+  - '53'
+  - '90'
+  - 'D1'
+  pastel_green: 
+  - '76'
+  - 'C8'
+  - '82'
+  pastel_lavender: 
+  - '8A'
+  - '72'
+  - 'C1'
+  pastel_yellow: 
+  - 'FE'
+  - 'F8'
+  - '75'
+  cheddar: 
+  - 'F1'
+  - 'AA'
+  - '0C'
+  toothpaste: 
+  - '93'
+  - 'C8'
+  - 'D4'
+  hot_coral: 
+  - 'FF'
+  - '38'
+  - '51'
+  plum: 
+  - 'A2'
+  - '4B'
+  - '9C'
+  kiwi_lime: 
+  - '6C'
+  - 'BE'
+  - '13'
+  turquoise: 
+  - '2B'
+  - '89'
+  - 'C6'
+  cyan: 
+  - '2B'
+  - '89'
+  - 'C6'
+  blush: 
+  - 'FF'
+  - '82'
+  - '85'
+  periwinkle_blue: 
+  - '64'
+  - '7C'
+  - 'BE'
+  light_pink: 
+  - 'F6'
+  - 'B3'
+  - 'DD'
+  green: 
+  - '4F'
+  - 'AD'
+  - '42'
+  bright_green: 
+  - '4F'
+  - 'AD'
+  - '42'
+  light_grey: 
+  - 'B1'
+  - 'B5'
+  - 'B2'
+  light_gray: 
+  - 'B1'
+  - 'B5'
+  - 'B2'
+  evergreen: 
+  - '35'
+  - '53'
+  - '43'
+  lavender: 
+  - 'AD'
+  - '98'
+  - 'D4'
+  pink: 
+  - 'E4'
+  - '48'
+  - '92'
+  raspberry: 
+  - 'A5'
+  - '30'
+  - '61'
+  butterscotch: 
+  - 'D4'
+  - '84'
+  - '37'
+  parrot_green: 
+  - '06'
+  - '7C'
+  - '81'
+  dark_grey: 
+  - '4D'
+  - '51'
+  - '56'
+  dark_gray: 
+  - '4D'
+  - '51'
+  - '56'
+  blueberry_cream: 
+  - '82'
+  - '97'
+  - 'D9'
+  cranapple: 
+  - '80'
+  - '32'
+  - '45'
+  prickly_pear: 
+  - 'BD'
+  - 'DA'
+  - '01'
+  sand: 
+  - 'E4'
+  - 'B6'
+  - '90'
