@@ -7,10 +7,11 @@ module Pixelmapper
 
   	attr_reader :colors, :transparent
 
-  	def initialize
+  	def initialize(yml_config = nil)
   		@colors = {}
   		@transparent = nil
   		@name = []
+  		load(yml_config) unless yml_config.nil?
   	end
 
   	def load palette_yml

@@ -8,14 +8,17 @@ describe "Color" do
   let(:pink_rgb) { [240, 95, 165, 255] }
   let(:pink) { Color.new(*pink16_rgb) }
   
+
+  let!(:palette) { Palette.new('./spec/data/perler.yml') }
+  
   # Perler Color pairings
-  let(:cheddar) { Color.new("fa","c8","55","ff", "cheddar") }
+  let(:cheddar) { palette.cheddar }
   let(:gold) { Color.new("d4","a0","17") }
   
-  let(:dark_blue) { Color.new("23","50","91","ff", "dark blue") }
+  let(:dark_blue) { palette.dark_blue }
   let(:cornflowerblue) { Color.new("15","1b","8d") }
   
-  let(:pastel_green) { Color.new("87","d2","91","ff", "pastel green") }
+  let(:pastel_green) { palette.pastel_green }
   let(:seagreen) { Color.new("2e","8b","57") }  
   
   

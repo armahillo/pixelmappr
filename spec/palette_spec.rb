@@ -5,6 +5,7 @@ module Pixelmapper
 describe "Palette" do
 	let!(:standard_yml) { './spec/data/standard.yml' }
     let!(:alternate_yml) { './spec/data/alternate.yml' }
+    let!(:standard_yml_colors) { YAML.load_file(standard_yml)["colors"] }
 
     context "With a YAML config loaded" do
       before(:each) do
@@ -46,15 +47,20 @@ describe "Palette" do
     	expect(p.name).to eq("Alternate")
     end
 
+
 	it "can load a YAML config file, containing color profiles" do
       p = Palette.new
       expect(p).to be_respond_to(:load)
-      yaml = YAML.load_file("./spec/data/standard.yml")
       expect { 
         p.load("./spec/data/standard.yml")
-      }.to change{p.colors.size}.by(yaml["colors"].size)
+      }.to change{p.colors.size}.by(standard_yml_colors.size)
 
       expect(p.name).to eq("Standard")
+	end
+
+	it "can receive a YAML file in the initializer and will automatically run load on it" do
+		p = Palette.new(standard_yml)
+		expect(p.colors.size).to eq(standard_yml_colors.size)
 	end
 
 	it "responds to each, yielding an array of colors" do
