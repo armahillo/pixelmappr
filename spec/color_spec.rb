@@ -44,6 +44,9 @@ describe "Color" do
   end
   
   context "when matching a color" do
+
+    pending "it is able to match black (black sometimes maps incorrectly)" do
+    end
   
     it "finds the closest match, given a list" do
       expect(cheddar.closest_match(gold,cornflowerblue,seagreen)).to eq(gold)    

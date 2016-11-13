@@ -5,8 +5,6 @@ class Perler < Magick::Image::View
 
   def initialize (img_path, palette_yml = './palettes/perler.yml')
     @image = Magick::Image.read(img_path).first
-    #@colors = ["empty"]
-    #@beads = {"empty" => 0}
     @palette = Palette.new(palette_yml)
     @grid = Grid.new(columns, rows)
     analyze
