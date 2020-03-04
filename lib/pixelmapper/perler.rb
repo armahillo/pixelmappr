@@ -69,7 +69,7 @@ class Perler < Magick::Image::View
     styles = "<style type=\"text/css\">table tr td { width: 35px; height: 35px; }"
     legend = "<tr>"
     row = 1
-    @@PERLER_COLORS.each do |name,color|
+    @palette.each do |name,color|
       column_limit = show_names ? 4 : 6
       styles += ".#{name.to_s} { background-color: #{color.to_s}; }"
       legend += "<td class=\"#{name.to_s}\"><abbr title=\"#{color.to_s}\">&nbsp;</abbr></td>"
