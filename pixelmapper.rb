@@ -2,7 +2,7 @@
 
 require 'rubygems'
 require 'bundler/setup'
-require 'RMagick'
+require 'rmagick'
 require './lib/pixelmapper/color.rb'
 require './lib/magick/pixel.rb'
 require './lib/pixelmapper/perler.rb'
@@ -13,6 +13,11 @@ include Pixelmapper
 
 ALLOWED_EXTENSIONS = '(jpg|png|gif|jpeg)'
 
+def export_image(image, file = nil)
+  file ||= image.gsub(/#{ALLOWED_EXTENSIONS}/, "html")
+  Perler.new(image).grid.export(file)
+end
+
 if ARGV.count.zero?
   puts "#{__FILE__} <image file|*.files> [output file]"
   exit false
@@ -21,26 +26,17 @@ end
 input = ARGV.shift
 output = ARGV.shift
 
+input = input.chomp("/")
+dir = File.dirname(input)
+file = File.basename(input)
+
 # Process as a collection
-if input.match?(/\*\.#{ALLOWED_EXTENSIONS}/)
-  dir,file = input.chomp("/")
+if file.match?(/\*\.#{ALLOWED_EXTENSIONS}/)
+  Dir.glob(input) do |file|
+    export_image(input)
+  end
 
 # Process as a single file
-elsif input.match?(/[^.]\.#{ALLOWED_EXTENSIONS}/)
-  output ||= input.gsub(/#{ALLOWED_EXTENSIONS}/, "html")
-  Perler.new(image).grid.export(output)
+elsif file.match?(/[^\.\*]\.#{ALLOWED_EXTENSIONS}/)
+  export_image(input, output)
 end
-
-#
-
-Dir[dir].each do |file|
-  output = file.gsub(/#{ALLOWED_EXTENSIONS}/, "html")
-  Perler.new(file).grid.export(output)
-end
-#p.grid.export(output, true, true, true)
-  
-#puts p.beads_needed
-#puts p.total_beads
-#p.grid.export
-#puts Perler.render_grid_with_all_colors(true)
-#puts p.grid.to_html
