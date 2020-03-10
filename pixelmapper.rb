@@ -11,12 +11,33 @@ require './lib/pixelmapper/palette.rb'
 
 include Pixelmapper
 
-image = ARGV.shift
-p = Perler.new(image)
+ALLOWED_EXTENSIONS = '(jpg|png|gif|jpeg)'
 
-output = (ARGV.count > 0) ? ARGV.shift : nil
+if ARGV.count.zero?
+  puts "#{__FILE__} <image file|*.files> [output file]"
+  exit false
+end
 
-p.grid.export(output, true, true, true)
+input = ARGV.shift
+output = ARGV.shift
+
+# Process as a collection
+if input.match?(/\*\.#{ALLOWED_EXTENSIONS}/)
+  dir,file = input.chomp("/")
+
+# Process as a single file
+elsif input.match?(/[^.]\.#{ALLOWED_EXTENSIONS}/)
+  output ||= input.gsub(/#{ALLOWED_EXTENSIONS}/, "html")
+  Perler.new(image).grid.export(output)
+end
+
+#
+
+Dir[dir].each do |file|
+  output = file.gsub(/#{ALLOWED_EXTENSIONS}/, "html")
+  Perler.new(file).grid.export(output)
+end
+#p.grid.export(output, true, true, true)
   
 #puts p.beads_needed
 #puts p.total_beads
