@@ -39,9 +39,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport (>= 4.1.11)
   factory_girl
   rainbow
-  rake
+  rake (>= 12.3.3)
   rmagick (< 4.0)
   rspec
 
