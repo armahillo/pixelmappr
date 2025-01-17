@@ -5,6 +5,7 @@ class Perler < Magick::Image::View
 
   def initialize (img_path, palette_yml = './palettes/perler.yml')
     @image = Magick::Image.read(img_path).first
+#    require 'pry-nav'; binding.pry
     @palette = Palette.new(palette_yml)
     @grid = Grid.new(columns, rows)
     analyze
@@ -89,9 +90,13 @@ class Perler < Magick::Image::View
 # Perler analysis properties
 ###
   def analyze
+    transparent_color = generate_transparent_color(@image.transparent_color)
+
     @image.each_pixel do |pixel,c,r|
-      o = Color.new(pixel.red.to_s(16), pixel.green.to_s(16), pixel.blue.to_s(16))
-      color = (pixel.transparent?) ? @palette.transparent : o.closest_match(*@palette.colors.values)
+      o = Color.new(pixel.red.to_s(16), pixel.green.to_s(16), pixel.blue.to_s(16), pixel.alpha.to_s(16))
+#require 'pry-nav'; binding.pry
+      color = (o == transparent_color || pixel.transparent?) ? @palette.transparent : o.closest_match(*@palette.colors.values)
+#require 'pry-nav'; binding.pry unless color.nil?
       @grid << color
     end
     @beads = @grid.manifest
@@ -99,6 +104,24 @@ class Perler < Magick::Image::View
 
   def total_beads
     @beads.values.inject(:+) - (@beads["empty"] || 0)
+  end
+
+  # We're expecting these to be in 16-bit
+  def generate_transparent_color(original)
+    original = original.delete_prefix('#')
+
+    case original.length
+    when 6, 8 # RRGGBB, RRGGBBAA
+      original.gsub!(/(.{2})/, '\1\1')
+    when 12, 16 # RRRRGGGGBBBB
+      # NOOP
+    else
+      raise ArgumentError(original)
+    end
+
+    r,g,b,a = original.scan(/.{4}/)
+
+    Color.new(r,g,b,a,'transparent')
   end
 end
 

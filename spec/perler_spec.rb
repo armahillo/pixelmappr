@@ -15,26 +15,23 @@ describe "Perler" do
     it "fails gracefully if the image path is invalid" do
       expect {
        Perler.new("nonexistant.image")
-      }.to raise_error
+      }.to raise_error(Magick::ImageMagickError)
     end
   end
 
   describe "Attributes > " do
     describe "dimensions > " do
       it "rows" do
-        expect(test_img).to respond_to(:rows)
         expect(test_img.rows).to eq(16)
       end
       it "columns" do
-        expect(test_img).to respond_to(:columns)
         expect(test_img.columns).to eq(12)
       end
       it "total pixels" do
-        expect(test_img).to respond_to(:total_pixels)
         expect(test_img.total_pixels).to eq(192)
       end
       it "total beads" do
-        expect(test_img).to respond_to(:total_beads)
+        test_img = Perler.new("spec/data/plumber.gif")
         expect(test_img.total_beads).to eq(143)
       end
     end

@@ -1,3 +1,4 @@
+require 'fileutils'
 
 module Pixelmapper
 
@@ -24,6 +25,7 @@ class Grid
     @encoded_hexcodes = {0 => ""}
     @encoded_names = {0 => "empty"}
     @manifest = {}
+    @legend = []
   end
 
   ## 

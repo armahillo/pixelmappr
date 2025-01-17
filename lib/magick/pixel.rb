@@ -1,12 +1,11 @@
 ###
 # Monkey-patches a transparent? predicate in
 ###
+
 module Magick
-
-class Pixel
-  def transparent?
-    self.opacity == 65535
+  class Pixel
+    def transparent?
+      self.alpha == 0
+    end
   end
-end
-
 end

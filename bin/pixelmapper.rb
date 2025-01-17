@@ -2,19 +2,15 @@
 
 require 'rubygems'
 require 'bundler/setup'
-require 'rmagick'
-require './lib/pixelmapper/color.rb'
-require './lib/magick/pixel.rb'
-require './lib/pixelmapper/perler.rb'
-require './lib/pixelmapper/grid.rb'
-require './lib/pixelmapper/palette.rb'
+require_relative '../lib/pixelmapper.rb'
 
 include Pixelmapper
 
 ALLOWED_EXTENSIONS = '(jpg|png|gif|jpeg)'
 
-def export_image(image, file = nil)
-  file ||= image.gsub(/#{ALLOWED_EXTENSIONS}/, "html")
+def export_image(image, file)
+  file.gsub!(/#{ALLOWED_EXTENSIONS}/, "html")
+  puts "Processing #{image} into #{file}"
   Perler.new(image).grid.export(file)
 end
 
@@ -33,10 +29,12 @@ file = File.basename(input)
 # Process as a collection
 if file.match?(/\*\.#{ALLOWED_EXTENSIONS}/)
   Dir.glob(input) do |file|
-    export_image(input)
+    output ||= "./export/" + File.basename(file)
+    export_image(file, output)
   end
 
 # Process as a single file
 elsif file.match?(/[^\.\*]\.#{ALLOWED_EXTENSIONS}/)
+  output ||= "./export/" + File.basename(input)
   export_image(input, output)
 end

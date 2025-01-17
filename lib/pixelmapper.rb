@@ -1,8 +1,10 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'RMagick'
-require 'pixelmapper/color.rb'
-require 'magick/pixel.rb'
-require 'pixelmapper/perler.rb'
-require 'pixelmapper/grid.rb'
-require 'pixelmapper/palette.rb'
+
+require 'rmagick'
+require_relative './magick/pixel.rb'
+
+require_relative './pixelmapper/color.rb'
+require_relative './pixelmapper/perler.rb'
+require_relative './pixelmapper/grid.rb'
+require_relative './pixelmapper/palette.rb'

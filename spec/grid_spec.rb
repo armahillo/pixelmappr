@@ -29,6 +29,7 @@ describe "Grid" do
       @checkerboard = grid.clone
       64.times { |i| @checkerboard << (i%2==0 ? white : black) }
     end
+
     describe "<<" do
       it "exists" do
         expect(grid).to respond_to(:<<)
@@ -39,21 +40,24 @@ describe "Grid" do
         }.to change(grid.data, :count).by(1)
       end
     end
+
     describe "manifest" do
-      
       it "exists" do
         expect(grid).to respond_to(:manifest)
-      end      
+      end
+
       it "returns a hash" do
         manifest = @checkerboard.manifest
         expect(manifest.class).to eq(Hash)
       end
+
       it "contains the count for each color used" do
         manifest = @checkerboard.manifest
         expect(manifest.keys).to match_array([black.name,white.name])
         expect(manifest.values).to match_array([32,32])
       end
     end
+
     describe "legend" do
       it "exists" do
         expect(grid).to respond_to(:legend)
@@ -125,24 +129,29 @@ t u v w x y z
     end
     
     describe "export" do
-      around(:each) do
+      before(:each) do
+        # Reset the export location
         ::FileUtils.rm_rf("./spec/export")
         ::FileUtils.mkdir("./spec/export")
       end
+
       it "exists" do
         expect(grid).to respond_to(:export)
       end
+
       it "creates a file" do
         expect {
           grid.export('spec/export/output.html')
         }.to change{File.exists?('spec/export/output.html')}.from(false).to(true)
       end
+
       it "allows for a default filename" do
-        allow(Grid).to_receive(:default_filename).and_return("spec/export/output.html")
+        allow(Grid).to receive(:default_filename).and_return("spec/export/output.html")
         expect {
           grid.export
         }.to change{File.exists?('spec/export/output.html')}.from(false).to(true)
       end
+
       it "appends html if that is not provided" do
         expect {
           grid.export('spec/export/output')
