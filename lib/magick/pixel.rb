@@ -1,11 +1,10 @@
-###
-# Monkey-patches a transparent? predicate in
-###
+# frozen_string_literal: true
 
 module Magick
+  # Monkey-patches a transparent? predicate into Magick::Pixel
   class Pixel
     def transparent?
-      self.alpha == 0
+      alpha.zero?
     end
   end
 end

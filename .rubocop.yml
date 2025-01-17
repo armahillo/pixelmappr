@@ -1,0 +1,12 @@
+---
+  AllCops:
+    NewCops: enable
+    Exclude:
+    <% `git status --ignored --porcelain`.lines.grep(/^!! /).each do |path| %>
+      - <%= path.sub(/^!! /, '').sub(/\/$/, '/**/*') %>
+    <% end %>
+  require:
+  - rubocop-rake
+  - rubocop-rspec
+  RSpec/MultipleMemoizedHelpers:
+    Enabled: false
