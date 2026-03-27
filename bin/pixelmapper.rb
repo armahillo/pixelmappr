@@ -10,7 +10,8 @@ ALLOWED_EXTENSIONS = '(jpg|png|gif|jpeg)'
 def export_image(image, file)
   output = file.gsub(/#{ALLOWED_EXTENSIONS}/, 'html')
   puts "Processing #{image} into #{output}"
-  Pixelmapper::Perler.new(image).grid.export(output)
+  html = Pixelmapper::Perler.new(image).grid.to_html(output)
+  File.write(output, html)
 end
 
 if ARGV.count.zero?

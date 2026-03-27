@@ -104,79 +104,14 @@ table.legend tr td.color_0 { border: 1px dotted black !important; }
         rownum += 1
         pattern += "\n</tr>\n"
       end
-      "<!doctype html><head>#{styles}</head><body>
-<table class=\"grid\">
-#{pattern}
-</table>
-<table class=\"legend\">
-#{legend_html}
-</table>
-</body></html>"
-    end
 
-    def export(file = nil, with_color = true, with_legend = true, with_manifest = false) # rubocop:disable Metrics/ParameterLists, Style/OptionalBooleanParameter
-      file_with_path = sanitize_destination_file(file)
-      File.write(file_with_path.to_s, to_html(with_color, with_legend, with_manifest))
+      "<!doctype html><head>#{styles}</head><body>\n<table class=\"grid\">\n#{pattern}\n</table>\n<table class=\"legend\">\n#{legend_html}\n</table>\n</body></html>"
     end
 
     def self.encode_index(index)
       index.to_i.to_s(36)
     end
 
-    def self.default_filename
-      "export/dump-#{Time.now.to_f.to_s.gsub('.', '')}.html"
-    end
 
-    private
-
-    def sanitize_destination_file(file_with_path = nil)
-      file_with_path ||= Grid.default_filename
-      dir = File.dirname(file_with_path)
-      dir = 'export' unless Dir.exist?(dir)
-      filename = File.basename(file_with_path)
-      filename += '.html' if filename[-4, 4] != 'html'
-      "#{dir}/#{filename}"
-    end
-
-    #   def self.render_grid_with_all_colors
-    #     styles = "<style type=\"text/css\">table tr td { width: 15px; height: 15px; }"
-    #     legend = "<tr>"
-    #     row = 1
-    #     @@PERLER_COLORS.each do |name,color|
-    #       styles += ".#{name.to_s} { background-color: #{color.to_s}; }"
-    #       legend += "<td class=\"#{name.to_s}\"><abbr title=\"#{color.to_s}\">&nbsp;</abbr></td>"
-    #       if (row % 6 == 0)
-    #         legend += "</tr><tr>"
-    #       end
-    #       row += 1
-    #     end
-    #     legend += "</tr>"
-    #     styles += "</style>"
-    #     puts "<!doctype html><head>#{styles}</head><body><table>#{legend}</table></body></html>"
-    #   end
-    #
-    #   def beads_needed
-    #     @beads.each do |color,qty|
-    #       next if color == "empty"
-    #       puts "#{qty} of #{color}"
-    #     end
-    #   end
-    #   def to_s
-    #     puts "PATTERN"
-    #     cols = @image.columns
-    #     @grid.each_index do |i|
-    #       puts "" if (i % cols == 0) and (i > 0)
-    #       print (@grid[i] == "0") ? "." : @grid[i]
-    #       print " "
-    #     end
-    #     puts ""
-    #     puts "Legend:"
-    #     @colors.each_index do |i|
-    #       puts i.to_s(16) + ": " + @colors[i].to_s
-    #     end
-    #   end
-    #
-    #
-    #   end
   end
 end

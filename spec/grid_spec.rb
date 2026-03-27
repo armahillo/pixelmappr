@@ -112,32 +112,5 @@ t u v w x y z
 
       it { is_expected.to eq(html_output) }
     end
-
-    describe '#export' do
-      before do
-        # Reset the export location
-        ::FileUtils.rm_rf('./spec/export')
-        ::FileUtils.mkdir('./spec/export')
-      end
-
-      it 'creates a file' do
-        expect do
-          checkerboard.export('spec/export/output.html')
-        end.to change { File.exist?('spec/export/output.html') }.from(false).to(true)
-      end
-
-      it 'allows for a default filename' do
-        allow(described_class).to receive(:default_filename).and_return('spec/export/output.html')
-        expect do
-          checkerboard.export
-        end.to change { File.exist?('spec/export/output.html') }.from(false).to(true)
-      end
-
-      it 'appends html if that is not provided' do
-        expect do
-          checkerboard.export('spec/export/output')
-        end.to change { File.exist?('spec/export/output.html') }.from(false).to(true)
-      end
-    end
   end
 end

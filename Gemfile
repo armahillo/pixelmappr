@@ -7,6 +7,7 @@ gem 'rainbow'
 gem 'rake', '>= 12.3.3'
 gem 'rmagick'
 gem 'rspec'
+gem 'timecop'
 
 # Not explicitly used, but mentioned here to ensure versioning
 # gem 'activesupport', '>= 4.1.11' # Security Alert

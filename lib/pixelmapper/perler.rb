@@ -97,7 +97,7 @@ module Pixelmapper
       transparent_color = generate_transparent_color(@image.transparent_color)
 
       @image.each_pixel do |pixel, _c, _r|
-        o = Color.new(pixel.red.to_s(16), pixel.green.to_s(16), pixel.blue.to_s(16), pixel.alpha.to_s(16))
+        o = Color.new(pixel.red.to_s(16).rjust(4, '0'), pixel.green.to_s(16).rjust(4, '0'), pixel.blue.to_s(16).rjust(4, '0'), pixel.alpha.to_s(16).rjust(4, '0'))
         color = if o == transparent_color || pixel.transparent?
                   @palette.transparent
                 else
